@@ -1,0 +1,96 @@
+﻿@model WebApplication1.Models.PostDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Post</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Post.ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Post.Published)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.Published)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Post.Username)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.Username)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Post.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Post.Content)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.Content)
+        </dd>
+    </dl>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User
+            </th>
+            <th>
+                Comment
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Comments)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4>Add Comment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Details">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PostID" value="@Model.Post.ID" />
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Post.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
