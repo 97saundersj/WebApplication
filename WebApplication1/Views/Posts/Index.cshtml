@@ -11,20 +11,26 @@
 </p>
 
 <table class="table">
-@foreach (var item in Model)
-{
-        <tr>
-            <td>
-                <table class="table">
-                    <tr>
-                        <td>
-                            <a asp-action="Comments" asp-route-id="@item.ID"><h2>@Html.DisplayFor(modelItem => item.Title)</h2></a>
-                            <p>Created by @Html.DisplayFor(modelItem => item.Username) at @Html.DisplayFor(modelItem => item.Published)</p>
-                            <p><a asp-action="Comments" asp-route-id="@item.ID">View Comments</a></p>
-                            <p><a asp-action="Edit" asp-route-id="@item.ID">Edit</a>|<a asp-action="Delete" asp-route-id="@item.ID">Delete</a></p>    
-                        </td>
-                    </tr>
-                </table>
-        </tr>
-}
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a asp-action="Comments" asp-route-id="@item.ID"><h2>@Html.DisplayFor(modelItem => item.Title)</h2></a>
+                                    <p>Created by @Html.DisplayFor(modelItem => item.Username) at @Html.DisplayFor(modelItem => item.Published)</p>
+                                    <p><a asp-action="Comments" asp-route-id="@item.ID">View Comments</a></p>
+                                    <p><a asp-action="Edit" asp-route-id="@item.ID">Edit</a>|<a asp-action="Delete" asp-route-id="@item.ID">Delete</a></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr />
+            </tr>
+        }  
+    </tbody>
 </table>
+<hr />

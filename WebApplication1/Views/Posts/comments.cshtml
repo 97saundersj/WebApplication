@@ -1,82 +1,30 @@
 ﻿@model WebApplication1.Models.PostDetailsViewModel
 
-
-<h2>Details</h2>
+@{
+    ViewData["Title"] = Model.Post.Title;
+}
 
 <div>
-    <h4>Post</h4>
+    <a asp-action="Comments" asp-route-id="@Model.Post.ID"><h2>@Html.DisplayFor(model => model.Post.Title)</h2></a>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.ID)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Post.ID)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.Published)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Post.Published)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.Username)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Post.Username)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Post.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.Content)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Post.Content)
-        </dd>
-    </dl>
+
+    <p>@Html.DisplayFor(model => model.Post.Content)</p>
+    <hr />
+
+    <p>Created by @Html.DisplayFor(modelItem => Model.Post.Username) at @Html.DisplayFor(modelItem => Model.Post.Published)</p>
 </div>
+<hr />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                User
-            </th>
-            <th>
-                Comment
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Comments)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
-
+<h3>Comments</h3>
+<hr />
 
 <h4>Add Comment</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Details">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="PostID" value="@Model.Post.ID" />
             <div class="form-group">
-                <label asp-for="CommentContent" class="control-label"></label>
                 <input asp-for="CommentContent" class="form-control" />
                 <span asp-validation-for="CommentContent" class="text-danger"></span>
             </div>
@@ -86,6 +34,30 @@
         </form>
     </div>
 </div>
+
+<table class="table">
+    <tbody>
+        @foreach (var item in Model.Comments)
+        {
+            <tr>
+                <td>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p> @Html.DisplayFor(modelItem => item.Content)</p>
+                                    <p>Created by @Html.DisplayFor(modelItem => item.Username) at TODO!</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr />
+            </tr>
+        }
+    </tbody>
+</table>
+<hr />
+
 
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Post.ID">Edit</a> |
