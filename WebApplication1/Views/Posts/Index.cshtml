@@ -1,48 +1,30 @@
 ﻿@model IEnumerable<WebApplication1.Models.Post>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Posts";
 }
 
-<h2>Posts</h2>
+<h1>Posts</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <table class="table">
-    <thead>
-        <tr>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Published)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Published)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
+                <table class="table">
+                    <tr>
+                        <td>
+                            <a asp-action="Comments" asp-route-id="@item.ID"><h2>@Html.DisplayFor(modelItem => item.Title)</h2></a>
+                            <p>Created by @Html.DisplayFor(modelItem => item.Username) at @Html.DisplayFor(modelItem => item.Published)</p>
+                            <p><a asp-action="Comments" asp-route-id="@item.ID">View Comments</a></p>
+                            <p><a asp-action="Edit" asp-route-id="@item.ID">Edit</a>|<a asp-action="Delete" asp-route-id="@item.ID">Delete</a></p>    
+                        </td>
+                    </tr>
+                </table>
         </tr>
 }
-    </tbody>
 </table>

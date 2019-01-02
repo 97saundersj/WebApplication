@@ -27,7 +27,7 @@ namespace WebApplication1.Models
         }
 
         // GET: Posts/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Comments(int? id)
         {
             if (id == null)
             {
@@ -51,7 +51,7 @@ namespace WebApplication1.Models
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details([Bind("PostID,CommentContent")]
+        public async Task<IActionResult> Comments([Bind("PostID,CommentContent")]
             PostDetailsViewModel viewModel)
         {
             Post post = await _context.Posts
@@ -68,7 +68,7 @@ namespace WebApplication1.Models
 
                 
                 comment.Content = viewModel.CommentContent;
-                comment.Username = User.Identity.Name;
+                comment.Username = User.Identity.Name; 
 
                 comment.MyPost = post;
 
