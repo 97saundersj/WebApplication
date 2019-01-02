@@ -16,11 +16,11 @@ namespace WebApplication1.Models
         [Display(Name = "User")]
         public String Username { get; set; }
 
-        [Required, MinLength(6), MaxLength(50)]
+        [Required, MinLength(6), MaxLength(255)]
         [Display(Name = "Title")]
         public string Title { get; set; }
 
-        [Required, MinLength(6), MaxLength(50)]
+        [Required, MinLength(6), MaxLength(1024)]
         [Display(Name = "Content")]
         public string Content { get; set; }
     }

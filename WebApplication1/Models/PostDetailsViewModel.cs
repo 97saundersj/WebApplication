@@ -12,12 +12,15 @@ namespace WebApplication1.Models
         public Post Post { get; set; }
 
         public List<Comment> Comments { get; set; }
-
+        
         public int PostID { get; set; }
 
         //[Required, MinLength(6), MaxLength(256)]
         //[Display(Name = "Content")]
         public string Content { get; set; }
 
+        [Required, MinLength(2), MaxLength(256)]
+        [Display(Name = "Comment")]
+        public string CommentContent { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace WebApplication1.Models
         [Display(Name = "User")]
         public String Username { get; set; }
 
-        [Required, MinLength(6), MaxLength(256)]
+        [Required, MinLength(2), MaxLength(256)]
         [Display(Name = "Content")]
         public string Content { get; set; }
 

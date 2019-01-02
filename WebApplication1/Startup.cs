@@ -37,14 +37,33 @@ namespace WebApplication1
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+
+            /*services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+                */
+            //ASP.NET Core 2.1 uses a Razor library for the Identity so the top code wont work and have to use the bottom
+            //May change need to change to match assignment requirements
+            services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddDefaultUI()
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+            
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CanCreatePostsClaim", policy =>
+                                  policy.RequireClaim("CanCreatePosts","True"));
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext context, UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -62,6 +81,8 @@ namespace WebApplication1
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            DbSeeder.Seed(context, userManager, roleManager);
 
             app.UseMvc(routes =>
             {

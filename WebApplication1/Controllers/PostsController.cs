@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using WebApplication1.Data;
 
 namespace WebApplication1.Models
 {
+    [Authorize]
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -49,30 +51,24 @@ namespace WebApplication1.Models
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details([Bind("PostID,Content")]
+        public async Task<IActionResult> Details([Bind("PostID,CommentContent")]
             PostDetailsViewModel viewModel)
         {
+            Post post = await _context.Posts
+                .SingleOrDefaultAsync(m => m.ID == viewModel.PostID);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                /*
-                if (viewModel.Comments == null)
-                {
-                    viewModel.Comments = new List<>;
-                }
-                */
                 Comment comment = new Comment();
 
                 
-                comment.Content = viewModel.Content;
+                comment.Content = viewModel.CommentContent;
                 comment.Username = User.Identity.Name;
-
-                Post post = await _context.Posts
-                    .SingleOrDefaultAsync(m => m.ID == viewModel.PostID);
-
-                if(post == null)
-                {
-                    return NotFound();
-                }
 
                 comment.MyPost = post;
 
@@ -81,6 +77,11 @@ namespace WebApplication1.Models
 
                 viewModel = await GetPostDetailsViewModelFromPost(post);
             }
+            else
+            {
+                viewModel = await GetPostDetailsViewModelFromPost(post);
+            }
+
             return View(viewModel);
         }
 
@@ -98,7 +99,10 @@ namespace WebApplication1.Models
             viewModel.Comments = comments;
             return viewModel;
         }
+
         // GET: Posts/Create
+        //[Authorize(Roles = "CanCreatePosts")]
+        [Authorize(Policy = "CanCreatePostsClaim")]
         public IActionResult Create()
         {
             return View();
@@ -108,6 +112,8 @@ namespace WebApplication1.Models
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        //[Authorize(Roles = "CanCreatePosts")]
+        [Authorize(Policy = "CanCreatePostsClaim")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Published,User,Title,Content")] Post post)
         {
@@ -118,9 +124,12 @@ namespace WebApplication1.Models
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+                
             }
             return View(post);
         }
+
+
 
         // GET: Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
