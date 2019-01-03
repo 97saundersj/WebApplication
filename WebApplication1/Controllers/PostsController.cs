@@ -68,7 +68,8 @@ namespace WebApplication1.Models
 
                 
                 comment.Content = viewModel.CommentContent;
-                comment.Username = User.Identity.Name; 
+                comment.Username = User.Identity.Name;
+                comment.Published = DateTime.Now;
 
                 comment.MyPost = post;
 
@@ -115,11 +116,12 @@ namespace WebApplication1.Models
         //[Authorize(Roles = "CanCreatePosts")]
         [Authorize(Policy = "CanCreatePostsClaim")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Published,User,Title,Content")] Post post)
+        public async Task<IActionResult> Create([Bind("Title,Content")] Post post)
         {
             if (ModelState.IsValid)
             {
                 post.Username = User.Identity.Name;
+                post.Published = DateTime.Now;
 
                 _context.Add(post);
                 await _context.SaveChangesAsync();
@@ -152,7 +154,7 @@ namespace WebApplication1.Models
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Published,Title,Content")] Post post)
+        public async Task<IActionResult> Edit(int? id, [Bind("ID,Title,Content")] Post post)
         {
             if (id != post.ID)
             {
@@ -161,6 +163,9 @@ namespace WebApplication1.Models
 
             if (ModelState.IsValid)
             {
+                post.Username = User.Identity.Name;
+                post.Published = DateTime.Now;
+
                 try
                 {
                     _context.Update(post);

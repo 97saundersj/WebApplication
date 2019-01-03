@@ -12,8 +12,8 @@
             border: 2px solid #dedede;
             background-color: #f1f1f1;
             border-radius: 5px;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 20px;
+            margin: 20px 0;
             text-align: center;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
@@ -26,15 +26,51 @@
         /* Style the posts username */
         .post-username {
             float: left;
-            margin-left: 20px;
+            margin-left: 0px;
             margin-right: 0;
             color: #999;
         }
 
+        /* Style the posts settings button */
+        .settings-button {
+            cursor: pointer;
+            font-size: 18px;
+            position: relative;
+            display: inline-block;
+
+            float: right;
+            margin-left: 0px;
+            margin-right: 0;
+        }
+
+        .settings-dropdown {
+            right: 0;
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .settings-dropdown a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .settings-dropdown a:hover {
+            background-color: #f1f1f1
+        }
+
+        .settings-button:hover .settings-dropdown {
+            display: block;
+        }
         /* Style the posts time */
         .post-time {
-            float: right;
-            margin-left: 20px;
+            float: left;
+            margin-left: 0px;
             margin-right: 0;
             color: #999;
         }
@@ -52,40 +88,54 @@
 
 <h3>Post</h3>
 
+<div>
+    <a asp-action="Index">Back</a>
+</div>
+
 <div class="card">
     <span class="post-username">@Html.DisplayFor(modelItem => Model.Post.Username)</span>
-    <span class="post-time">@Html.DisplayFor(modelItem => Model.Post.Published)</span>
+
+    <div class="settings-button">
+        <span><i class="material-icons">settings</i></span>
+        <div class="settings-dropdown">
+            <a asp-action="Edit" asp-route-id="@Model.Post.ID" class="dropdown-button">Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model.Post.ID" class="dropdown-button">Delete</a>
+        </div>
+    </div>
+
 
     <h2>@Html.DisplayFor(model => model.Post.Title)</h2>
 
     <div class="post-content">
         <p>@Html.DisplayFor(model => model.Post.Content)</p>
     </div>
+
+    <span class="post-time">@Html.DisplayFor(modelItem => Model.Post.Published)</span>
+    <br>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>|
-    <a asp-action="Edit" asp-route-id="@Model.Post.ID">Edit</a>|
-    <span class="delete"><a asp-action="Delete" asp-route-id="Model.Post.ID">Delete</a></span>
-</div>
+
 
 <hr>
 <h3>Comments</h3>
 <hr>
 
-        @foreach (var item in Model.Comments)
-        {
-            <div class="card">
-                <span class="post-username">@Html.DisplayFor(modelItem => item.Username)</span>
-                <span class="post-time">TODO!</span>
+@foreach (var item in Model.Comments)
+{
+    <div class="card">
+    <span class="post-username">@Html.DisplayFor(modelItem => item.Username)</span>
 
-                <br>
-                <div class="post-content">
-                    <p>@Html.DisplayFor(modelItem => item.Content)</p>
-                </div>
-            </div>
+    <br>
+    <div class="post-content">
+        <p>@Html.DisplayFor(modelItem => item.Content)</p>
+    </div>
 
-        }
+    <span class="post-time">@Html.DisplayFor(modelItem => item.Published)</span>
+    <br>
+
+</div>
+
+}
 
 <hr>
 

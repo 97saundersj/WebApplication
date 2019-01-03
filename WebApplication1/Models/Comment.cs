@@ -15,6 +15,9 @@ namespace WebApplication1.Models
         [Display(Name = "User")]
         public String Username { get; set; }
 
+        [Required, Display(Name = "Publish Date")]
+        public DateTime Published { get; set; }
+
         [Required, MinLength(2), MaxLength(256)]
         [Display(Name = "Content")]
         public string Content { get; set; }
