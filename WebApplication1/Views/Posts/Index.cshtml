@@ -3,34 +3,69 @@
 @{
     ViewData["Title"] = "Posts";
 }
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <style>
+
+        .add-button {
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+            background-color: lightgrey;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .card {
+            border: 2px solid #dedede;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
+
+        /* Style the posts username */
+        .post-username {
+            float: left;
+            margin-left: 20px;
+            margin-right: 0;
+            color: #999;
+        }
+
+        /* Style the posts time */
+        .post-time {
+            float: right;
+            margin-left: 20px;
+            margin-right: 0;
+            color: #999;
+        }
+
+    </style>
+</head>
 <h1>Posts</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="add-button"><i class="material-icons">add</i></a>
 </p>
+@foreach (var item in Model)
+{
+<div class="card">
+    <span class="post-username">@Html.DisplayFor(modelItem => item.Username)</span>
+    <span class="post-time">@Html.DisplayFor(modelItem => item.Published)</span>
 
-<table class="table">
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <a asp-action="Comments" asp-route-id="@item.ID"><h2>@Html.DisplayFor(modelItem => item.Title)</h2></a>
-                                    <p>Created by @Html.DisplayFor(modelItem => item.Username) at @Html.DisplayFor(modelItem => item.Published)</p>
-                                    <p><a asp-action="Comments" asp-route-id="@item.ID">View Comments</a></p>
-                                    <p><a asp-action="Edit" asp-route-id="@item.ID">Edit</a>|<a asp-action="Delete" asp-route-id="@item.ID">Delete</a></p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <hr />
-            </tr>
-        }  
-    </tbody>
-</table>
-<hr />
+    <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+
+    <a asp-action="Comments" asp-route-id="@item.ID" class="comments-button">View Comments</a>
+</div>
+}

@@ -4,24 +4,95 @@
     ViewData["Title"] = Model.Post.Title;
 }
 
-<div>
-    <a asp-action="Comments" asp-route-id="@Model.Post.ID"><h2>@Html.DisplayFor(model => model.Post.Title)</h2></a>
-    <hr />
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    <p>@Html.DisplayFor(model => model.Post.Content)</p>
-    <hr />
+    <style>
+        .card {
+            border: 2px solid #dedede;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
 
-    <p>Created by @Html.DisplayFor(modelItem => Model.Post.Username) at @Html.DisplayFor(modelItem => Model.Post.Published)</p>
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
+
+        /* Style the posts username */
+        .post-username {
+            float: left;
+            margin-left: 20px;
+            margin-right: 0;
+            color: #999;
+        }
+
+        /* Style the posts time */
+        .post-time {
+            float: right;
+            margin-left: 20px;
+            margin-right: 0;
+            color: #999;
+        }
+        /* Style the posts content */
+        .post-content {
+            border: 2px solid #dedede;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<h3>Post</h3>
+
+<div class="card">
+    <span class="post-username">@Html.DisplayFor(modelItem => Model.Post.Username)</span>
+    <span class="post-time">@Html.DisplayFor(modelItem => Model.Post.Published)</span>
+
+    <h2>@Html.DisplayFor(model => model.Post.Title)</h2>
+
+    <div class="post-content">
+        <p>@Html.DisplayFor(model => model.Post.Content)</p>
+    </div>
 </div>
-<hr />
 
+<div>
+    <a asp-action="Index">Back to List</a>|
+    <a asp-action="Edit" asp-route-id="@Model.Post.ID">Edit</a>|
+    <span class="delete"><a asp-action="Delete" asp-route-id="Model.Post.ID">Delete</a></span>
+</div>
+
+<hr>
 <h3>Comments</h3>
-<hr />
+<hr>
+
+        @foreach (var item in Model.Comments)
+        {
+            <div class="card">
+                <span class="post-username">@Html.DisplayFor(modelItem => item.Username)</span>
+                <span class="post-time">TODO!</span>
+
+                <br>
+                <div class="post-content">
+                    <p>@Html.DisplayFor(modelItem => item.Content)</p>
+                </div>
+            </div>
+
+        }
+
+<hr>
 
 <h4>Add Comment</h4>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Details">
+        <form asp-action="Comments">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="PostID" value="@Model.Post.ID" />
             <div class="form-group">
@@ -33,33 +104,4 @@
             </div>
         </form>
     </div>
-</div>
-
-<table class="table">
-    <tbody>
-        @foreach (var item in Model.Comments)
-        {
-            <tr>
-                <td>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <p> @Html.DisplayFor(modelItem => item.Content)</p>
-                                    <p>Created by @Html.DisplayFor(modelItem => item.Username) at TODO!</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <hr />
-            </tr>
-        }
-    </tbody>
-</table>
-<hr />
-
-
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Post.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>
