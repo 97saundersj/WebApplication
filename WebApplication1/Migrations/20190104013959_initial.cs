@@ -55,8 +55,8 @@ namespace WebApplication1.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Published = table.Column<DateTime>(nullable: false),
                     Username = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(maxLength: 50, nullable: false),
-                    Content = table.Column<string>(maxLength: 50, nullable: false)
+                    Title = table.Column<string>(maxLength: 255, nullable: false),
+                    Content = table.Column<string>(maxLength: 1024, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,8 +109,8 @@ namespace WebApplication1.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -154,8 +154,8 @@ namespace WebApplication1.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -176,6 +176,7 @@ namespace WebApplication1.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Username = table.Column<string>(nullable: true),
+                    Published = table.Column<DateTime>(nullable: false),
                     Content = table.Column<string>(maxLength: 256, nullable: false),
                     MyPostID = table.Column<int>(nullable: false)
                 },

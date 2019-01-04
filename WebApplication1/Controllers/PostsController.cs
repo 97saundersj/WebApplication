@@ -134,6 +134,7 @@ namespace WebApplication1.Models
 
 
         // GET: Posts/Edit/5
+        [Authorize(Policy = "CanCreatePostsClaim")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -154,6 +155,7 @@ namespace WebApplication1.Models
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "CanCreatePostsClaim")]
         public async Task<IActionResult> Edit(int? id, [Bind("ID,Title,Content")] Post post)
         {
             if (id != post.ID)
@@ -182,12 +184,13 @@ namespace WebApplication1.Models
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Comments", new { id });
             }
             return View(post);
         }
 
         // GET: Posts/Delete/5
+        [Authorize(Policy = "CanDeletePostsClaim")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -206,6 +209,7 @@ namespace WebApplication1.Models
         }
 
         // POST: Posts/Delete/5
+        [Authorize(Policy = "CanDeletePostsClaim")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

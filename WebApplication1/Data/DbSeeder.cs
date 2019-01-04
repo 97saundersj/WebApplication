@@ -91,6 +91,20 @@ namespace WebApplication1.Data
             userManager.AddClaimAsync(Customer4, new Claim("CanCreatePosts", "False")).Wait();
             userManager.AddClaimAsync(Customer5, new Claim("CanCreatePosts", "False")).Wait();
 
+            userManager.AddClaimAsync(Member1, new Claim("CanEditPosts", "True")).Wait();
+            userManager.AddClaimAsync(Customer1, new Claim("CanEditPosts", "False")).Wait();
+            userManager.AddClaimAsync(Customer2, new Claim("CanEditPosts", "False")).Wait();
+            userManager.AddClaimAsync(Customer3, new Claim("CanEditPosts", "False")).Wait();
+            userManager.AddClaimAsync(Customer4, new Claim("CanEditPosts", "False")).Wait();
+            userManager.AddClaimAsync(Customer5, new Claim("CanEditPosts", "False")).Wait();
+
+            userManager.AddClaimAsync(Member1, new Claim("CanDeletePosts", "True")).Wait();
+            userManager.AddClaimAsync(Customer1, new Claim("CanDeletePosts", "False")).Wait();
+            userManager.AddClaimAsync(Customer2, new Claim("CanDeletePosts", "False")).Wait();
+            userManager.AddClaimAsync(Customer3, new Claim("CanDeletePosts", "False")).Wait();
+            userManager.AddClaimAsync(Customer4, new Claim("CanDeletePosts", "False")).Wait();
+            userManager.AddClaimAsync(Customer5, new Claim("CanDeletePosts", "False")).Wait();
+
 
         }
 

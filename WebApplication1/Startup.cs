@@ -53,6 +53,10 @@ namespace WebApplication1
             {
                 options.AddPolicy("CanCreatePostsClaim", policy =>
                                   policy.RequireClaim("CanCreatePosts","True"));
+                options.AddPolicy("CanEditPostsClaim", policy =>
+                                  policy.RequireClaim("CanEditPosts", "True"));
+                options.AddPolicy("CanDeletePostsClaim", policy =>
+                                  policy.RequireClaim("CanDeletePosts", "True"));
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
