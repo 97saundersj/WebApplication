@@ -21,9 +21,33 @@ namespace WebApplication1.Models
         }
 
         // GET: Posts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            return View(await _context.Posts.ToListAsync());
+            List<Post> posts;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                posts = await _context.Posts.Where(x => x.Title.Contains(searchString)).ToListAsync();
+            }
+            else
+            {
+                posts = await _context.Posts.ToListAsync();
+            }
+
+            switch (sortOrder)
+            {
+                case "Date":
+                    posts = posts.OrderBy(x => x.Published).ToList();
+                    break;
+                case "Date-Descending":
+                    posts = posts.OrderByDescending(x => x.Published).ToList();
+                    break;
+                default:
+                    posts = posts.OrderBy(x => x.Published).ToList();
+                    break;
+            }
+
+            return View(posts);
         }
 
         // GET: Posts/Details/5
@@ -66,7 +90,7 @@ namespace WebApplication1.Models
             {
                 Comment comment = new Comment();
 
-                
+
                 comment.Content = viewModel.CommentContent;
                 comment.Username = User.Identity.Name;
                 comment.Published = DateTime.Now;
@@ -101,11 +125,12 @@ namespace WebApplication1.Models
             return viewModel;
         }
 
+
         // GET: Posts/Create
-        //[Authorize(Roles = "CanCreatePosts")]
         [Authorize(Policy = "CanCreatePostsClaim")]
         public IActionResult Create()
         {
+            ViewBag.Message = "Hello There";
             return View();
         }
 
@@ -113,7 +138,6 @@ namespace WebApplication1.Models
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //[Authorize(Roles = "CanCreatePosts")]
         [Authorize(Policy = "CanCreatePostsClaim")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Content")] Post post)
@@ -126,7 +150,7 @@ namespace WebApplication1.Models
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-                
+
             }
             return View(post);
         }
@@ -189,6 +213,20 @@ namespace WebApplication1.Models
             return View(post);
         }
 
+        public ActionResult RemoveEmployee(int employeeId)
+        {
+            try
+            {
+                //server side code
+                return Json(true);
+            }
+            catch (Exception)
+            {
+                return Json(false); ;
+            }
+        }
+
+        
         // GET: Posts/Delete/5
         [Authorize(Policy = "CanDeletePostsClaim")]
         public async Task<IActionResult> Delete(int? id)
@@ -225,4 +263,5 @@ namespace WebApplication1.Models
             return _context.Posts.Any(e => e.ID == id);
         }
     }
+
 }

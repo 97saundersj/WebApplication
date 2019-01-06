@@ -12,12 +12,59 @@
             width: 25px;
             height: 25px;
             line-height: 25px;
-            background-color: lightgrey;
             display: inline-block;
             text-align: center;
             vertical-align: middle;
             cursor: pointer;
+            font-size: 15px;
+        }
+
+        .search-button {
+            width: 25px;
+            height: 37px;
+            line-height: 25px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        /* Style the sorting functionality */
+        .sort-button {
+            cursor: pointer;
             font-size: 18px;
+            position: relative;
+            display: inline-block;
+            float: right;
+            margin-left: 0px;
+            margin-right: 0;
+        }
+
+        .sort-dropdown {
+            font-size: 15px;
+            right: 0;
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .sort-dropdown a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .sort-dropdown a:hover {
+                    background-color: #f1f1f1
+                }
+
+        .sort-button:hover .sort-dropdown {
+            display: block;
         }
 
         .card {
@@ -53,19 +100,44 @@
 </head>
 <h1>Posts</h1>
 
+
+
 <p>
-    <a asp-action="Create" class="add-button"><i class="material-icons">add</i></a>
+    <a asp-action="Create" class="add-button">
+        <button><i class="material-icons">add</i></button>
+     </a>
 </p>
+<br>
+
+<div class="sort-button">
+    <p>SORT BY</p>
+    <div class="sort-dropdown">
+        @Html.ActionLink("Date added (old-to-new)", "Index", new { sortOrder = "Date" })
+        @Html.ActionLink("Date added (new-to-old)", "Index", new { sortOrder = "Date-Descending" })
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+<p>
+    Title: @Html.TextBox("SearchString")
+    <a class="search-button">
+        <button type="submit"><i class="material-icons">search</i></button>
+    </a>
+</p>
+}
+
+
 @{var odd = false;}
 @foreach (var item in Model)
 {
     odd = !odd;
-<div class="card" style="@(odd ? "background-color: lightskyblue;" : "background-color:#F0F0F0")">
-    <span class="post-username">@Html.DisplayFor(modelItem => item.Username)</span>
-    <span class="post-time">@Html.DisplayFor(modelItem => item.Published)</span>
+    <div class="card" style="@(odd ? "background-color: lightskyblue;" : "background-color:#F0F0F0")">
+        <span class="post-username">@Html.DisplayFor(modelItem => item.Username)</span>
+        <span class="post-time">@Html.DisplayFor(modelItem => item.Published)</span>
 
-    <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+        <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
 
-    <a asp-action="Comments" asp-route-id="@item.ID" class="comments-button">View Comments</a>
-</div>
+        <a asp-action="Comments" asp-route-id="@item.ID" class="comments-button">View Comments</a>
+    </div>
 }

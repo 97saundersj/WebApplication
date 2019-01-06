@@ -86,7 +86,7 @@ namespace WebApplication1
 
             app.UseAuthentication();
 
-            DbSeeder.Seed(context, userManager, roleManager);
+            DbSeeder.Seed(context, userManager);
 
             app.UseMvc(routes =>
             {
