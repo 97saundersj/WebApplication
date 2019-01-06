@@ -15,6 +15,10 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    
+    <link rel="stylesheet" href="~/css/bubbles.css" type="text/css" />
+    <script src="~/js/bubbles.js" type="text/javascript"></script>
+      
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:dodgerblue">
@@ -32,7 +36,6 @@
                 <ul class="nav navbar-nav" style="color:black">
                     <li><a asp-area="" asp-controller="Posts" asp-action="Index" style="color:black">Posts</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About" style="color:black">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact" style="color:black">Contact</a></li>
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
@@ -41,6 +44,8 @@
 
     <partial name="_CookieConsentPartial" />
 
+    <br />
+    <br />
     <div class="container body-content">
         @RenderBody()
         <hr />
