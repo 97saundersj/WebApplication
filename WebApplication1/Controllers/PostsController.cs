@@ -65,7 +65,7 @@ namespace WebApplication1.Models
                 return NotFound();
             }
 
-            PostDetailsViewModel viewModel = await GetPostDetailsViewModelFromPost(post);
+            PostCommentsViewModel viewModel = await GetPostDetailsViewModelFromPost(post);
 
             return View(viewModel);
         }
@@ -74,7 +74,7 @@ namespace WebApplication1.Models
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Comments([Bind("PostID,CommentContent")]
-            PostDetailsViewModel viewModel)
+            PostCommentsViewModel viewModel)
         {
             Post post = await _context.Posts
                 .SingleOrDefaultAsync(m => m.ID == viewModel.PostID);
@@ -108,9 +108,9 @@ namespace WebApplication1.Models
             return View(viewModel);
         }
 
-        private async Task<PostDetailsViewModel> GetPostDetailsViewModelFromPost(Post post)
+        private async Task<PostCommentsViewModel> GetPostDetailsViewModelFromPost(Post post)
         {
-            PostDetailsViewModel viewModel = new PostDetailsViewModel();
+            PostCommentsViewModel viewModel = new PostCommentsViewModel();
 
             viewModel.Post = post;
             viewModel.Content = post.Content;
