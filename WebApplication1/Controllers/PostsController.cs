@@ -50,7 +50,7 @@ namespace WebApplication1.Models
             return View(posts);
         }
 
-        // GET: Posts/Details/5
+        // GET: Posts/Comments/5
         public async Task<IActionResult> Comments(int? id)
         {
             if (id == null)
@@ -70,9 +70,7 @@ namespace WebApplication1.Models
             return View(viewModel);
         }
 
-        // POST: Posts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Post: Posts/Comments/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Comments([Bind("PostID,CommentContent")]
@@ -135,8 +133,6 @@ namespace WebApplication1.Models
         }
 
         // POST: Posts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize(Policy = "CanCreatePostsClaim")]
         [ValidateAntiForgeryToken]
@@ -154,8 +150,6 @@ namespace WebApplication1.Models
             }
             return View(post);
         }
-
-
 
         // GET: Posts/Edit/5
         [Authorize(Policy = "CanCreatePostsClaim")]
@@ -175,8 +169,6 @@ namespace WebApplication1.Models
         }
 
         // POST: Posts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "CanCreatePostsClaim")]
@@ -212,21 +204,7 @@ namespace WebApplication1.Models
             }
             return View(post);
         }
-
-        public ActionResult RemoveEmployee(int employeeId)
-        {
-            try
-            {
-                //server side code
-                return Json(true);
-            }
-            catch (Exception)
-            {
-                return Json(false); ;
-            }
-        }
-
-        
+   
         // GET: Posts/Delete/5
         [Authorize(Policy = "CanDeletePostsClaim")]
         public async Task<IActionResult> Delete(int? id)
