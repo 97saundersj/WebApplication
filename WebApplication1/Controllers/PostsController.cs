@@ -65,7 +65,7 @@ namespace WebApplication1.Models
                 return NotFound();
             }
 
-            PostCommentsViewModel viewModel = await GetPostDetailsViewModelFromPost(post);
+            PostCommentsViewModel viewModel = await GetPostCommentsViewModelFromPost(post);
 
             return View(viewModel);
         }
@@ -98,17 +98,17 @@ namespace WebApplication1.Models
                 _context.Comments.Add(comment);
                 await _context.SaveChangesAsync();
 
-                viewModel = await GetPostDetailsViewModelFromPost(post);
+                viewModel = await GetPostCommentsViewModelFromPost(post);
             }
             else
             {
-                viewModel = await GetPostDetailsViewModelFromPost(post);
+                viewModel = await GetPostCommentsViewModelFromPost(post);
             }
 
             return View(viewModel);
         }
 
-        private async Task<PostCommentsViewModel> GetPostDetailsViewModelFromPost(Post post)
+        private async Task<PostCommentsViewModel> GetPostCommentsViewModelFromPost(Post post)
         {
             PostCommentsViewModel viewModel = new PostCommentsViewModel();
 
@@ -128,7 +128,6 @@ namespace WebApplication1.Models
         [Authorize(Policy = "CanCreatePostsClaim")]
         public IActionResult Create()
         {
-            ViewBag.Message = "Hello There";
             return View();
         }
 

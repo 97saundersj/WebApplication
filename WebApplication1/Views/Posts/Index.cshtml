@@ -20,7 +20,7 @@
 
 
 <div class="dropdown">
-    <button onclick="myFunction()" class="dropbtn">Sort</button>
+    <button onclick="dropdownClick()" class="dropbtn">Sort</button>
     <div id="myDropdown" class="dropdown-content">
         @Html.ActionLink("Date added (old-to-new)", "Index", new { sortOrder = "Date" })
         @Html.ActionLink("Date added (new-to-old)", "Index", new { sortOrder = "Date-Descending" })

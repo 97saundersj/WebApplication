@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
@@ -42,8 +37,8 @@ namespace WebApplication1
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
                 */
-            //ASP.NET Core 2.1 uses a Razor library for the Identity so the top code wont work and have to use the bottom
-            //May change need to change to match assignment requirements
+            //ASP.NET Core 2.1 uses a different way for the Identity so the top code wont work and have to use the bottom
+            //May change need to change later
             services.AddIdentity<IdentityUser, IdentityRole>()
             .AddDefaultUI()
             .AddDefaultTokenProviders()

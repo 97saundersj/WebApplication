@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Models.PostDetailsViewModel
+﻿@model WebApplication1.Models.PostCommentsViewModel
 
 @{
     ViewData["Title"] = Model.Post.Title;
@@ -19,7 +19,7 @@
 
 <div class="post-card">
     <span class="dropdown">
-    <i onclick="myFunction()" class="material-icons dropbtn">settings</i>
+    <i onclick="dropdownClick()" class="material-icons dropbtn">settings</i>
     <div id="myDropdown" class="dropdown-content">
         <a asp-action="Edit" asp-route-id="@Model.Post.ID" class="dropdown-button">Edit</a>
         <a asp-action="Delete" asp-route-id="@Model.Post.ID" class="dropdown-button">Delete</a>
